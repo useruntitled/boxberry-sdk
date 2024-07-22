@@ -4,6 +4,8 @@ namespace WildTuna\BoxberrySdk;
 
 use WildTuna\BoxberrySdk\Entity\CalculateParams;
 use WildTuna\BoxberrySdk\Entity\Intake;
+use WildTuna\BoxberrySdk\Entity\NewCalculateParams;
+use WildTuna\BoxberrySdk\Entity\NewTariffInfo;
 use WildTuna\BoxberrySdk\Entity\Order;
 use WildTuna\BoxberrySdk\Entity\TariffInfo;
 use WildTuna\BoxberrySdk\Exception\BoxBerryException;
@@ -299,6 +301,23 @@ class Client implements LoggerAwareInterface
         $params = $calcParams->asArr();
         $response = $this->callApi('GET', 'DeliveryCosts', $params);
         return new TariffInfo($response);
+    }
+
+    /**
+     * @param NewCalculateParams $params
+     * @return mixed|NewTariffInfo
+     * @throws BoxBerryException
+     */
+    public function getDeliveryCalculation(NewCalculateParams  $params)
+    {
+        $params = $params->asArr();
+        $response = $this->callApi('GET', 'DeliveryCalculation', $params);
+
+        if(isset($response['result'])) {
+            return new NewTariffInfo($response['result']);
+        }
+
+        return $response['error'];
     }
 
     /**
