@@ -2,7 +2,7 @@
 
 namespace WildTuna\BoxberrySdk\Entity;
 
-class DeliveryType
+enum DeliveryType
 {
   const PVZ = 1;
 
